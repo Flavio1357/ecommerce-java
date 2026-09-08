@@ -1,6 +1,8 @@
 package model;
 
-public class Cliente extends  Usuario{
+import interfaces.Autenticavel;
+
+public class Cliente extends  Usuario implements Autenticavel{
 
     private String endereco;
 
@@ -24,5 +26,10 @@ public class Cliente extends  Usuario{
         System.out.println("CPF: " + getCpf());
         System.out.println("Endereco: " + endereco);
 
+    }
+
+    @Override 
+    public boolean autenticar(String senha){
+        return getSenha().equals(senha);
     }
 }

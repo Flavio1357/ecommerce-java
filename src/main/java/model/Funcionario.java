@@ -1,6 +1,8 @@
 package model;
 
-public class Funcionario extends Usuario{
+import interfaces.Autenticavel;
+
+public class Funcionario extends Usuario implements Autenticavel{
     private String cargo;
 
     public Funcionario(String cargo, int id, String nome, String email, String senha, String cpf){
@@ -22,6 +24,11 @@ public class Funcionario extends Usuario{
         System.out.println("CPF: " + getCpf());
         System.out.println("Email: " + getEmail());
         System.out.println("Cargo: "+ cargo);
+    }
+
+    @Override 
+    public boolean autenticar(String senha){
+        return getSenha().equals(senha);
     }
 
 }

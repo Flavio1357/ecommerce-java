@@ -95,4 +95,37 @@ public class UsuarioTest {
 		cliente.exibirDados();
 		funcionario.exibirDados();
 	}
+
+	@Test
+	void deveAutenticarCliente() {
+
+		Cliente cliente = new Cliente(
+			"Rua A",
+			1,
+			"Flavio",
+			"flavio@email.com",
+			"123456",
+			"12345678900"
+		);
+
+		assertEquals(true, cliente.autenticar("123456"));
+		assertEquals(false, cliente.autenticar("999999"));
+	}
+
+	@Test
+	void deveAutenticarFuncionario() {
+
+		Funcionario funcionario = new Funcionario(
+			"Gerente",
+			2,
+			"Joao",
+			"joao@email.com",
+			"123456",
+			"98765432100"
+		);
+
+		assertEquals(true, funcionario.autenticar("123456"));
+		assertEquals(false, funcionario.autenticar("999999"));
+	}
+
 }
