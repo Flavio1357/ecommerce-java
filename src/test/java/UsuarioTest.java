@@ -1,0 +1,98 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import org.junit.jupiter.api.Test;
+
+import model.Cliente;
+import model.Funcionario;
+import model.Usuario;
+
+public class UsuarioTest {
+
+	@Test
+	void deveCriarClienteCorretamente() {
+
+		Cliente cliente = new Cliente(
+			"Rua A",
+			1,
+			"Flavio",
+			"flavio@email.com",
+			"123456",
+			"12345678900"
+		);
+
+		assertEquals(1, cliente.getId());
+		assertEquals("Flavio", cliente.getNome());
+		assertEquals("flavio@email.com", cliente.getEmail());
+		assertEquals("12345678900", cliente.getCpf());
+		assertEquals("Rua A", cliente.getEndereco());
+	}
+
+	@Test
+	void deveCriarFuncionarioCorretamente() {
+
+		Funcionario funcionario = new Funcionario(
+			"Gerente",
+			2,
+			"Joao",
+			"joao@email.com",
+			"123456",
+			"98765432100"
+		);
+
+		assertEquals(2, funcionario.getId());
+		assertEquals("Joao", funcionario.getNome());
+		assertEquals("joao@email.com", funcionario.getEmail());
+		assertEquals("98765432100", funcionario.getCpf());
+		assertEquals("Gerente", funcionario.getCargo());
+	}
+
+	@Test
+	void deveDemonstrarHeranca() {
+
+		Cliente cliente = new Cliente(
+			"Rua A",
+			1,
+			"Flavio",
+			"flavio@email.com",
+			"123456",
+			"12345678900"
+		);
+
+		Funcionario funcionario = new Funcionario(
+			"Gerente",
+			2,
+			"Joao",
+			"joao@email.com",
+			"123456",
+			"98765432100"
+		);
+
+		assertInstanceOf(Usuario.class, cliente);
+		assertInstanceOf(Usuario.class, funcionario);
+	}
+
+	@Test
+	void deveDemonstrarPolimorfismo() {
+
+		Usuario cliente = new Cliente(
+			"Rua A",
+			1,
+			"Flavio",
+			"flavio@email.com",
+			"123456",
+			"12345678900"
+		);
+
+		Usuario funcionario = new Funcionario(
+			"Gerente",
+			2,
+			"Joao",
+			"joao@email.com",
+			"123456",
+			"98765432100"
+		);
+
+		cliente.exibirDados();
+		funcionario.exibirDados();
+	}
+}
