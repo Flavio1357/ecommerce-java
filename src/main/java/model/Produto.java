@@ -1,20 +1,24 @@
 package model;
 
+import enums.CategoriaProduto;
+
 public abstract class Produto {
     private int id;
     private String nome;
     private String descricao;
     private double preco;
     private int estoque;
-    private double distancia; 
+    private double distancia;
+    private CategoriaProduto categoria;
     
-    public Produto(int id, String nome, String descricao, double preco, int estoque, double distancia){
+    public Produto(int id, String nome, String descricao, double preco, int estoque, double distancia, CategoriaProduto categoria){
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
         this.estoque = estoque;
         this.distancia = distancia;
+        this.categoria = categoria;
     }
 
     public int getId() {
@@ -63,6 +67,14 @@ public abstract class Produto {
 
     public void setDistancia(double distancia) {
         this.distancia = distancia;
+    }
+
+    public CategoriaProduto getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaProduto categoria) {
+        this.categoria = categoria;
     }
 
     public abstract double calcularFrete();

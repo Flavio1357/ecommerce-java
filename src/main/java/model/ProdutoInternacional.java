@@ -1,11 +1,13 @@
 package model;
 
+import enums.CategoriaProduto;
+
 public class ProdutoInternacional extends Produto {
 
 	private double percentualImportacao;
 
-	public ProdutoInternacional(int id, String nome, String descricao, double preco, int estoque, double distancia,double percentualImportacao) {
-		super(id, nome, descricao, preco, estoque, distancia);
+	public ProdutoInternacional(int id, String nome, String descricao, double preco, int estoque, double distancia,double percentualImportacao, CategoriaProduto categoria) {
+		super(id, nome, descricao, preco, estoque, distancia, categoria);
 		this.percentualImportacao = percentualImportacao;
 	}
 
