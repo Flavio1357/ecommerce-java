@@ -1,9 +1,11 @@
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import pagamento.PagamentoBoleto;
 import pagamento.PagamentoCredito;
 import pagamento.PagamentoDebito;
+import pagamento.PagamentoMIX;
 
 public class PagamentoTest {
 
@@ -29,5 +31,17 @@ public class PagamentoTest {
 	    PagamentoBoleto pagamento = new PagamentoBoleto();
 
 	    assertDoesNotThrow(() -> pagamento.processarPagamento(300.00));
+    }
+
+    @Test
+    void deveCriarPagamentoMix() {
+
+	    PagamentoMIX pagamento = new PagamentoMIX(
+		    new PagamentoDebito(),
+		    new PagamentoCredito()
+	    );
+
+	    assertEquals(PagamentoDebito.class, pagamento.getPagamento1().getClass());
+	    assertEquals(PagamentoCredito.class, pagamento.getPagamento2().getClass());
     }
 }
