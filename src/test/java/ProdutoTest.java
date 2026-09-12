@@ -8,7 +8,7 @@ import model.ProdutoNacional;
 public class ProdutoTest {
 
 	@Test
-	void deveCalcularFreteProdutoNacional() {
+	public void deveCalcularFreteProdutoNacional() {
 
 		ProdutoNacional produto = new ProdutoNacional(
 			1,
@@ -25,7 +25,7 @@ public class ProdutoTest {
 	}
 
 	@Test
-	void deveCalcularFreteEImpostoProdutoInternacional() {
+	public void deveCalcularFreteEImpostoProdutoInternacional() {
 
 		ProdutoInternacional produto = new ProdutoInternacional(
 	        2,

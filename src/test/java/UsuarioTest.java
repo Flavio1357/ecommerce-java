@@ -9,7 +9,7 @@ import model.Usuario;
 public class UsuarioTest {
 
 	@Test
-	void deveCriarClienteCorretamente() {
+	public void deveCriarClienteCorretamente() {
 
 		Cliente cliente = new Cliente(
 			"Rua A",
@@ -28,7 +28,7 @@ public class UsuarioTest {
 	}
 
 	@Test
-	void deveCriarFuncionarioCorretamente() {
+	public void deveCriarFuncionarioCorretamente() {
 
 		Funcionario funcionario = new Funcionario(
 			"Gerente",
@@ -47,7 +47,7 @@ public class UsuarioTest {
 	}
 
 	@Test
-	void deveDemonstrarHeranca() {
+	public void deveDemonstrarHeranca() {
 
 		Cliente cliente = new Cliente(
 			"Rua A",
@@ -72,7 +72,7 @@ public class UsuarioTest {
 	}
 
 	@Test
-	void deveDemonstrarPolimorfismo() {
+	public void deveDemonstrarPolimorfismo() {
 
 		Usuario cliente = new Cliente(
 			"Rua A",
@@ -97,7 +97,7 @@ public class UsuarioTest {
 	}
 
 	@Test
-	void deveAutenticarCliente() {
+	public void deveAutenticarCliente() {
 
 		Cliente cliente = new Cliente(
 			"Rua A",
@@ -113,7 +113,7 @@ public class UsuarioTest {
 	}
 
 	@Test
-	void deveAutenticarFuncionario() {
+	public void deveAutenticarFuncionario() {
 
 		Funcionario funcionario = new Funcionario(
 			"Gerente",

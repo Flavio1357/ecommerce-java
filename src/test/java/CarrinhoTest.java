@@ -11,7 +11,7 @@ import model.ProdutoNacional;
 public class CarrinhoTest {
 
 	@Test
-	void deveCalcularTotalDoCarrinho() {
+	public void deveCalcularTotalDoCarrinho() {
 
 		ProdutoNacional produto = new ProdutoNacional(
 			1,
@@ -32,7 +32,7 @@ public class CarrinhoTest {
 	}
 
 	@Test
-	void deveLancarExcecaoParaQuantidadeInvalida() {
+	public void deveLancarExcecaoParaQuantidadeInvalida() {
 
 		ProdutoNacional produto = new ProdutoNacional(
 			1,
