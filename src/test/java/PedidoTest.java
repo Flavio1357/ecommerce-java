@@ -6,6 +6,7 @@ import enums.CategoriaProduto;
 import enums.StatusPedido;
 import exception.CarrinhoVazioException;
 import exception.PagamentoNaoDefinidoException;
+import exception.PedidoJaPagoException;
 import model.Carrinho;
 import model.Cliente;
 import model.ItemCarrinho;
@@ -211,5 +212,42 @@ public class PedidoTest {
 		pedido.pagar();
 
 		assertEquals(StatusPedido.PAGO, pedido.getStatus());
+	}
+
+	@Test
+	public void deveImpedirPagamentoDuplicado() {
+
+		Cliente cliente = new Cliente(
+			"Rua A",
+			1,
+			"Flavio",
+			"flavio@email.com",
+			"123456",
+			"12345678900"
+		);
+
+		ProdutoNacional produto = new ProdutoNacional(
+			1,
+			"Notebook",
+			"Notebook nacional",
+			3000.00,
+			10,
+			100,
+			CategoriaProduto.ELETRONICO
+		);
+
+		Carrinho carrinho = new Carrinho();
+		carrinho.adicionarItem(new ItemCarrinho(produto, 2));
+
+		Pedido pedido = new Pedido(1, cliente, carrinho);
+
+		pedido.setFormaPagamento(new PagamentoDebito());
+
+		pedido.pagar();
+
+		assertThrows(
+			PedidoJaPagoException.class,
+			() -> pedido.pagar()
+		);
 	}
 }

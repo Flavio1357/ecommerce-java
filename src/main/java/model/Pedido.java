@@ -3,6 +3,7 @@ package model;
 import enums.StatusPedido;
 import exception.CarrinhoVazioException;
 import exception.PagamentoNaoDefinidoException;
+import exception.PedidoJaPagoException;
 import interfaces.FormaPagamento;
 
 public class Pedido {
@@ -70,6 +71,11 @@ public class Pedido {
     }
 
     public void pagar(){
+
+        if(status == StatusPedido.PAGO){
+            throw  new PedidoJaPagoException("Este pedido já foi pago");
+        }
+
         if(formaPagamento == null){
             throw new PagamentoNaoDefinidoException("Ë necessario definir uma forma de pagamento"); 
         }
