@@ -11,7 +11,9 @@ import model.Cliente;
 import model.ItemCarrinho;
 import model.Pedido;
 import model.ProdutoNacional;
+import pagamento.PagamentoCredito;
 import pagamento.PagamentoDebito;
+import pagamento.PagamentoMIX;
 
 public class PedidoTest {
 
@@ -168,5 +170,46 @@ public class PedidoTest {
 			PagamentoNaoDefinidoException.class,
 			() -> pedido.pagar()
 		);
+	}
+
+	@Test
+	public void deveRealizarPagamentoMIXDoPedido() {
+
+		Cliente cliente = new Cliente(
+			"Rua A",
+			1,
+			"Flavio",
+			"flavio@email.com",
+			"123456",
+			"12345678900"
+		);
+
+		ProdutoNacional produto = new ProdutoNacional(
+			1,
+			"Notebook",
+			"Notebook nacional",
+			3000.00,
+			10,
+			100,
+			CategoriaProduto.ELETRONICO
+		);
+
+		Carrinho carrinho = new Carrinho();
+		carrinho.adicionarItem(new ItemCarrinho(produto, 2));
+
+		Pedido pedido = new Pedido(1, cliente, carrinho);
+
+		PagamentoMIX pagamento = new PagamentoMIX(
+			new PagamentoDebito(),
+			new PagamentoCredito(),
+			3000.00,
+			3000.00
+		);
+
+		pedido.setFormaPagamento(pagamento);
+
+		pedido.pagar();
+
+		assertEquals(StatusPedido.PAGO, pedido.getStatus());
 	}
 }
