@@ -2,12 +2,15 @@ package model;
 
 import enums.StatusPedido;
 import exception.CarrinhoVazioException;
+import exception.PagamentoNaoDefinidoException;
+import interfaces.FormaPagamento;
 
 public class Pedido {
     private int id;
     private Cliente cliente;
     private Carrinho carrinho;
     private StatusPedido status;
+    private FormaPagamento formaPagamento;
 
     public Pedido(int id, Cliente cliente, Carrinho carrinho){
 
@@ -54,7 +57,24 @@ public class Pedido {
         this.status = status;
     }
 
+    public FormaPagamento getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+
     public double calcularTotal(){
         return carrinho.calcularTotal();
+    }
+
+    public void pagar(){
+        if(formaPagamento == null){
+            throw new PagamentoNaoDefinidoException("Ë necessario definir uma forma de pagamento"); 
+        }
+
+        formaPagamento.processarPagamento(calcularTotal());
+        status = StatusPedido.PAGO;
     }
 }

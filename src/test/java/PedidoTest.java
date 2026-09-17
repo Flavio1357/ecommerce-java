@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import enums.CategoriaProduto;
 import enums.StatusPedido;
 import exception.CarrinhoVazioException;
+import exception.PagamentoNaoDefinidoException;
 import model.Carrinho;
 import model.Cliente;
 import model.ItemCarrinho;
 import model.Pedido;
 import model.ProdutoNacional;
+import pagamento.PagamentoDebito;
 
 public class PedidoTest {
 
@@ -66,4 +68,105 @@ public class PedidoTest {
 		    () -> new Pedido(1, cliente, carrinho)
 	    );
     }
+
+	@Test
+	public void deveAdicionarFormaPagamentoAoPedido() {
+
+		Cliente cliente = new Cliente(
+			"Rua A",
+			1,
+			"Flavio",
+			"flavio@email.com",
+			"123456",
+			"12345678900"
+		);
+
+		ProdutoNacional produto = new ProdutoNacional(
+			1,
+			"Notebook",
+			"Notebook nacional",
+			3000.00,
+			10,
+			100,
+			CategoriaProduto.ELETRONICO
+		);
+
+		Carrinho carrinho = new Carrinho();
+		carrinho.adicionarItem(new ItemCarrinho(produto, 2));
+
+		Pedido pedido = new Pedido(1, cliente, carrinho);
+
+		PagamentoDebito pagamento = new PagamentoDebito();
+
+		pedido.setFormaPagamento(pagamento);
+
+		assertEquals(pagamento, pedido.getFormaPagamento());
+	}
+
+	@Test
+	public void deveRealizarPagamentoDoPedido() {
+
+		Cliente cliente = new Cliente(
+			"Rua A",
+			1,
+			"Flavio",
+			"flavio@email.com",
+			"123456",
+			"12345678900"
+		);
+
+		ProdutoNacional produto = new ProdutoNacional(
+			1,
+			"Notebook",
+			"Notebook nacional",
+			3000.00,
+			10,
+			100,
+			CategoriaProduto.ELETRONICO
+		);
+
+		Carrinho carrinho = new Carrinho();
+		carrinho.adicionarItem(new ItemCarrinho(produto, 2));
+
+		Pedido pedido = new Pedido(1, cliente, carrinho);
+
+		pedido.setFormaPagamento(new PagamentoDebito());
+
+		pedido.pagar();
+
+		assertEquals(StatusPedido.PAGO, pedido.getStatus());
+	}
+
+	@Test
+	public void deveImpedirPagamentoSemFormaPagamento() {
+
+		Cliente cliente = new Cliente(
+			"Rua A",
+			1,
+			"Flavio",
+			"flavio@email.com",
+			"123456",
+			"12345678900"
+		);
+
+		ProdutoNacional produto = new ProdutoNacional(
+			1,
+			"Notebook",
+			"Notebook nacional",
+			3000.00,
+			10,
+			100,
+			CategoriaProduto.ELETRONICO
+		);
+
+		Carrinho carrinho = new Carrinho();
+		carrinho.adicionarItem(new ItemCarrinho(produto, 2));
+
+		Pedido pedido = new Pedido(1, cliente, carrinho);
+
+		assertThrows(
+			PagamentoNaoDefinidoException.class,
+			() -> pedido.pagar()
+		);
+	}
 }
