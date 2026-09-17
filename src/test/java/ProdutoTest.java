@@ -42,4 +42,22 @@ public class ProdutoTest {
 		assertEquals(600.00, produto.calcularImpostoImportacao());
 		assertEquals(CategoriaProduto.ELETRONICO, produto.getCategoria());
 	}
+
+	@Test
+	public void deveReduzirEstoqueCorretamente() {
+
+		ProdutoNacional produto = new ProdutoNacional(
+			1,
+			"Notebook",
+			"Notebook nacional",
+			3000.00,
+			10,
+			100,
+			CategoriaProduto.ELETRONICO
+		);
+
+		produto.reduzirEstoque(3);
+
+		assertEquals(7, produto.getEstoque());
+	}
 }

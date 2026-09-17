@@ -3,6 +3,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import enums.CategoriaProduto;
+import exception.ProdutoIndisponivelException;
 import exception.QuantidadeInvalidaException;
 import model.Carrinho;
 import model.ItemCarrinho;
@@ -51,6 +52,25 @@ public class CarrinhoTest {
 		assertThrows(
 			QuantidadeInvalidaException.class,
 			() -> carrinho.adicionarItem(item)
+		);
+	}
+
+	@Test
+	public void deveImpedirAdicionarQuantidadeMaiorQueEstoque() {
+
+		ProdutoNacional produto = new ProdutoNacional(
+			1,
+			"Notebook",
+			"Notebook nacional",
+			3000.00,
+			2,
+			100,
+			CategoriaProduto.ELETRONICO
+		);
+
+		assertThrows(
+			ProdutoIndisponivelException.class,
+			() -> new ItemCarrinho(produto, 3)
 		);
 	}
 }

@@ -1,6 +1,7 @@
 package model;
 
 import enums.CategoriaProduto;
+import exception.ProdutoIndisponivelException;
 
 public abstract class Produto {
     private int id;
@@ -78,4 +79,12 @@ public abstract class Produto {
     }
 
     public abstract double calcularFrete();
+
+    public void reduzirEstoque(int qtd){
+        if(qtd > estoque){
+            throw new ProdutoIndisponivelException("Quantidade solicitada maior que o estoque disponivel");
+        }
+
+        estoque -= qtd;
+    }
 }

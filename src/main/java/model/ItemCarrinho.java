@@ -1,10 +1,17 @@
 package model;
 
+import exception.ProdutoIndisponivelException;
+
 public class ItemCarrinho {
     private Produto produto;
     private int qtd;
 
     public ItemCarrinho(Produto produto, int qtd){
+
+        if(qtd > produto.getEstoque()){
+            throw new ProdutoIndisponivelException("Quantidade solicitada maior que o estoque disponível");
+        }
+        
         this.produto = produto;
         this.qtd = qtd;
     }

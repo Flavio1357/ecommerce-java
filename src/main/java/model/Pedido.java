@@ -81,6 +81,11 @@ public class Pedido {
         }
 
         formaPagamento.processarPagamento(calcularTotal());
+
+        for(ItemCarrinho item : carrinho.getItens()){
+            item.getProduto().reduzirEstoque(item.getQtd());
+        }
+        
         status = StatusPedido.PAGO;
     }
 }

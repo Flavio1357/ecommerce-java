@@ -250,4 +250,38 @@ public class PedidoTest {
 			() -> pedido.pagar()
 		);
 	}
+
+	@Test
+	public void deveReduzirEstoqueAoPagarPedido() {
+
+		Cliente cliente = new Cliente(
+			"Rua A",
+			1,
+			"Flavio",
+			"flavio@email.com",
+			"123456",
+			"12345678900"
+		);
+
+		ProdutoNacional produto = new ProdutoNacional(
+			1,
+			"Notebook",
+			"Notebook nacional",
+			3000.00,
+			10,
+			100,
+			CategoriaProduto.ELETRONICO
+		);
+
+		Carrinho carrinho = new Carrinho();
+		carrinho.adicionarItem(new ItemCarrinho(produto, 2));
+
+		Pedido pedido = new Pedido(1, cliente, carrinho);
+
+		pedido.setFormaPagamento(new PagamentoDebito());
+
+		pedido.pagar();
+
+		assertEquals(8, produto.getEstoque());
+	}
 }
