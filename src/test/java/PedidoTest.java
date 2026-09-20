@@ -12,10 +12,12 @@ import model.Carrinho;
 import model.Cliente;
 import model.ItemCarrinho;
 import model.Pedido;
+import model.Produto;
 import model.ProdutoNacional;
 import pagamento.PagamentoCredito;
 import pagamento.PagamentoDebito;
 import pagamento.PagamentoMIX;
+import service.PedidoService;
 
 public class PedidoTest {
 
@@ -324,5 +326,39 @@ public class PedidoTest {
 		);
 
 		assertEquals(StatusPedido.AGUARDANDO_PAGAMENTO, pedido.getStatus());
+	}
+
+	@Test
+	public void deveRealizarPagamentoPeloService() {
+    	Cliente cliente = new Cliente(
+        	"Rua A",
+       		1,
+        	"Flavio",
+        	"flavio@email.com",
+        	"123",
+        	"11111111111"
+    	);
+
+    	Produto produto = new ProdutoNacional(
+        	1,
+        	"Notebook",
+       		"Notebook para estudo",
+        	3000.00,
+        	10,
+        	100,
+        	CategoriaProduto.ELETRONICO
+    	);
+
+    	Carrinho carrinho = new Carrinho();
+    	carrinho.adicionarItem(new ItemCarrinho(produto, 1));
+
+    	Pedido pedido = new Pedido(1, cliente, carrinho);
+    	pedido.setFormaPagamento(new PagamentoDebito());
+
+    	PedidoService service = new PedidoService();
+
+    	service.realizarPagamento(pedido);
+
+    	assertEquals(StatusPedido.PAGO, pedido.getStatus());
 	}
 }
