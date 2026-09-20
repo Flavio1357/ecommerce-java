@@ -361,4 +361,5 @@ public class PedidoTest {
 
     	assertEquals(StatusPedido.PAGO, pedido.getStatus());
 	}
+	
 }
