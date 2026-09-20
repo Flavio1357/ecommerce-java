@@ -87,4 +87,11 @@ public abstract class Produto {
 
         estoque -= qtd;
     }
+
+    public void verificarEstoque(int qtd){
+        if(qtd > estoque){
+            throw new ProdutoIndisponivelException("Quantidade solicitada maior que o estoque disponível");
+        }
+    }
+
 }

@@ -80,6 +80,10 @@ public class Pedido {
             throw new PagamentoNaoDefinidoException("Ë necessario definir uma forma de pagamento"); 
         }
 
+        for(ItemCarrinho item : carrinho.getItens()){
+            item.getProduto().verificarEstoque(item.getQtd());
+        }
+
         formaPagamento.processarPagamento(calcularTotal());
 
         for(ItemCarrinho item : carrinho.getItens()){

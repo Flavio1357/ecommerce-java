@@ -7,6 +7,7 @@ import enums.StatusPedido;
 import exception.CarrinhoVazioException;
 import exception.PagamentoNaoDefinidoException;
 import exception.PedidoJaPagoException;
+import exception.ProdutoIndisponivelException;
 import model.Carrinho;
 import model.Cliente;
 import model.ItemCarrinho;
@@ -283,5 +284,45 @@ public class PedidoTest {
 		pedido.pagar();
 
 		assertEquals(8, produto.getEstoque());
+	}
+
+	@Test
+	public void deveImpedirPagamentoQuandoEstoqueForInsuficiente() {
+
+		Cliente cliente = new Cliente(
+			"Rua A",
+			1,
+			"Flavio",
+			"flavio@email.com",
+			"123456",
+			"12345678900"
+		);
+
+		ProdutoNacional produto = new ProdutoNacional(
+			1,
+			"Notebook",
+			"Notebook nacional",
+			3000.00,
+			2,
+			100,
+			CategoriaProduto.ELETRONICO
+		);
+
+		Carrinho carrinho = new Carrinho();
+
+		carrinho.adicionarItem(new ItemCarrinho(produto, 2));
+
+		Pedido pedido = new Pedido(1, cliente, carrinho);
+
+		produto.reduzirEstoque(1);
+
+		pedido.setFormaPagamento(new PagamentoDebito());
+
+		assertThrows(
+			ProdutoIndisponivelException.class,
+			() -> pedido.pagar()
+		);
+
+		assertEquals(StatusPedido.AGUARDANDO_PAGAMENTO, pedido.getStatus());
 	}
 }
